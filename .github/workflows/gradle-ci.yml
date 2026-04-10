@@ -95,29 +95,3 @@ jobs:
           echo "| Branch | \`${{ github.ref_name }}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| Status | Testes OK |" >> $GITHUB_STEP_SUMMARY
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    environment: production
-    env:
-      DEPLOY_ENV: ${{ vars.DEPLOY_ENV }}
-    steps:
-      - name: Verificar configuracao
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if [ -z "$DEPLOY_ENV" ]; then
-            echo "::error::Variavel DEPLOY_ENV nao configurada no environment"
-            exit 1
-          fi
-          echo "::notice::Deploy autorizado para o ambiente $DEPLOY_ENV"
-
-      - name: Executar deploy
-        run: |
-          echo "Realizando deploy da imagem $IMAGE_NAME para $DEPLOY_ENV"
-          echo "## Deploy Summary" >> $GITHUB_STEP_SUMMARY
-          echo "| Campo | Valor |" >> $GITHUB_STEP_SUMMARY
-          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| Ambiente | \`$DEPLOY_ENV\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Imagem | \`$IMAGE_NAME\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Status | Deploy OK |" >> $GITHUB_STEP_SUMMARY
