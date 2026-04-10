@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: leogloriainfnet/ufodb:${UFODB_TAG:-1.0-win}
+    container_name: ufology-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: devops2025!
+      POSTGRES_DB: ufology
+    ports:
+      - "5432:5432"
+    networks:
+      - ufology-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:alpine
+    container_name: ufology-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ufology-net
+
+  app:
+    image: wanderfalcao/ufotracker:latest
+    container_name: ufology-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ufology
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: devops2025!
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - ufology-net
+
+networks:
+  ufology-net:
+    driver: bridge
