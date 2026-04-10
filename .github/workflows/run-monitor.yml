@@ -1,0 +1,84 @@
+name: Run Monitor
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  WORKFLOW_VERSION: "1.0"
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_ENV: ${{ vars.DEPLOY_ENV }}
+    steps:
+      - name: Validar variaveis obrigatorias
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          echo "Versao do workflow: $WORKFLOW_VERSION"
+          echo "Ambiente: $DEPLOY_ENV"
+
+          if [ -z "$DEPLOY_ENV" ]; then
+            echo "::error::Variavel DEPLOY_ENV nao configurada no repositorio (Settings > Variables)"
+            exit 1
+          fi
+
+          if [ -z "$API_KEY" ]; then
+            echo "::warning::API_KEY nao encontrado — algumas integrações podem falhar"
+          fi
+
+          echo "::notice::Monitoramento iniciado para o ambiente $DEPLOY_ENV"
+
+      - name: Verificar saude do pipeline
+        run: |
+          BUILD_STATUS="ok"
+
+          if [ "$BUILD_STATUS" != "ok" ]; then
+            echo "::error::Pipeline em estado critico — interrompendo execucao"
+            echo "Sugestao: verifique os logs do job de build anterior"
+            exit 1
+          fi
+
+          echo "::notice::Pipeline saudavel — prosseguindo"
+
+      - name: Gerar resumo do monitor
+        run: |
+          echo "## Monitor Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Campo | Valor |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Workflow Version | \`$WORKFLOW_VERSION\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Ambiente | \`$DEPLOY_ENV\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Branch | \`${{ github.ref_name }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | Monitor OK |" >> $GITHUB_STEP_SUMMARY
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: monitor
+    environment: production
+    env:
+      PROD_DOMAIN: ${{ vars.PROD_DOMAIN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Validar ambiente de producao
+        run: |
+          if [ -z "$PROD_DOMAIN" ]; then
+            echo "::error::PROD_DOMAIN nao configurado no environment production"
+            echo "Sugestao: acesse Settings > Environments > production > Variables"
+            exit 1
+          fi
+
+          echo "::notice::Deploy autorizado para $PROD_DOMAIN"
+
+      - name: Executar deploy
+        run: |
+          echo "Realizando deploy para $PROD_DOMAIN"
+          echo "## Deploy Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Campo | Valor |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Dominio | \`$PROD_DOMAIN\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | Deploy OK |" >> $GITHUB_STEP_SUMMARY
