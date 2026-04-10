@@ -1,4 +1,4 @@
-name: Maven CI
+name: Maven CI (gradle-ci)
 
 on:
   push:
@@ -52,6 +52,24 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: build
+    services:
+      postgres:
+        image: leogloriainfnet/ufodb:1.0-win
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: devops2025!
+          POSTGRES_DB: ufology
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
     steps:
       - uses: actions/checkout@v4
 
