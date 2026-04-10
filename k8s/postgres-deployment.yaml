@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: leogloriainfnet/ufodb
+          image: leogloriainfnet/ufodb:1.0-win
           ports:
             - containerPort: 5432
           env:
