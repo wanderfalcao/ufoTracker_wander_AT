@@ -1,11 +1,11 @@
 # Operação Ufology — ufoTracker
 
-[![Hello CI/CD](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/hello.yml/badge.svg)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/hello.yml)
-[![Tests](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/tests.yml/badge.svg)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/tests.yml)
-[![Maven CI](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/gradle-ci.yml/badge.svg)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/gradle-ci.yml)
-[![Env Demo](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/env-demo.yml/badge.svg)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/env-demo.yml)
-[![Secret Demo](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/secret-demo.yml/badge.svg)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/secret-demo.yml)
-[![Run Monitor](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/run-monitor.yml/badge.svg)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/run-monitor.yml)
+[![Hello CI/CD](https://img.shields.io/github/actions/workflow/status/wanderfalcao/ufoTracker_wander_AT/hello.yml?label=Hello%20CI%2FCD)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/hello.yml)
+[![Tests](https://img.shields.io/github/actions/workflow/status/wanderfalcao/ufoTracker_wander_AT/tests.yml?label=Tests)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/tests.yml)
+[![Maven CI](https://img.shields.io/github/actions/workflow/status/wanderfalcao/ufoTracker_wander_AT/gradle-ci.yml?label=Maven%20CI)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/gradle-ci.yml)
+[![Env Demo](https://img.shields.io/github/actions/workflow/status/wanderfalcao/ufoTracker_wander_AT/env-demo.yml?label=Env%20Demo)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/env-demo.yml)
+[![Secret Demo](https://img.shields.io/github/actions/workflow/status/wanderfalcao/ufoTracker_wander_AT/secret-demo.yml?label=Secret%20Demo)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/secret-demo.yml)
+[![Run Monitor](https://img.shields.io/github/actions/workflow/status/wanderfalcao/ufoTracker_wander_AT/run-monitor.yml?label=Run%20Monitor)](https://github.com/wanderfalcao/ufoTracker_wander_AT/actions/workflows/run-monitor.yml)
 
 Sistema de rastreamento de avistamentos UFO. Stack: Java 21, Spring Boot 3.5.4, PostgreSQL, Redis.
 
