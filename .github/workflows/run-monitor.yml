@@ -1,7 +1,9 @@
 name: Run Monitor
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Maven CI (gradle-ci)"]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
