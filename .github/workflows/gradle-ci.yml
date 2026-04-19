@@ -1,4 +1,4 @@
-name: Maven CI (gradle-ci)
+name: CI
 
 on:
   push:
@@ -12,8 +12,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      MAVEN_OPTS: "-Xmx1024m"
     steps:
       - uses: actions/checkout@v4
 
@@ -84,7 +82,7 @@ jobs:
         run: |
           chmod +x mvnw
           echo "::notice::Iniciando verificacao de testes"
-          ./mvnw test -q 2>&1 || (echo "::error::Falha nos testes — deploy bloqueado"; exit 1)
+          ./mvnw test 2>&1 || (echo "::error::Falha nos testes — deploy bloqueado"; exit 1)
           echo "::notice::Testes concluidos com sucesso"
 
       - name: Resumo dos testes
@@ -94,4 +92,3 @@ jobs:
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
           echo "| Branch | \`${{ github.ref_name }}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| Status | Testes OK |" >> $GITHUB_STEP_SUMMARY
-

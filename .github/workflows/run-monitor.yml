@@ -2,13 +2,14 @@ name: Run Monitor
 
 on:
   workflow_run:
-    workflows: ["Maven CI (gradle-ci)"]
+    workflows: ["CI"]
     types: [completed]
     branches: [main]
   workflow_dispatch:
 
 env:
   WORKFLOW_VERSION: "1.0"
+  ACTIONS_STEP_DEBUG: true
 
 jobs:
   monitor:
