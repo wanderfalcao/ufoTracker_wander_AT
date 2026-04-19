@@ -4,6 +4,7 @@ metadata:
   name: ufotracker-service
   namespace: ufology
 spec:
+  type: NodePort
   selector:
     app: ufotracker
   ports:
